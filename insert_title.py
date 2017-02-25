@@ -51,7 +51,7 @@ def sponge(m,l,g):
         s = to_bits(f(from_bits(s)))
         Z.extend(s[0:r])
     return Z[0:l]
-print(stream_cipher("Thisisthemostannoyingthingihavedonealldaybecausethisistheonlythingihavedonealld","Potato",16000))
+print(stream_cipher("O wow","Potato",1024))
     #Cardinality of set S = |S|
     #log(1+e) ~ e if e << 1
     #Length of a bitstring M = |M|
