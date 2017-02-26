@@ -20,7 +20,8 @@
 # 
 #     http://www.pcg-random.org
 #
-
+CC = x86_64-w64-mingw32-gcc
+CXX =x86_64-w64-mingw32-g++
 all:
 	cd src; $(MAKE)
 	cd test-low; $(MAKE)
@@ -30,7 +31,7 @@ all:
 PREFIX = /usr/local
 
 install: all
-	install src/libpcg_random.a $PREFIX/lib
+	install src/libpcg_random.lib $PREFIX/lib
 	install -m 0644 include/pcg_variants.h $PREFIX/include
 
 test:   all

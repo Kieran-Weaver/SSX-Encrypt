@@ -21,9 +21,9 @@
 #     http://www.pcg-random.org
 #
 
-TARGETS = pcg32-demo pcg32-global-demo pcg32x2-demo pcg64-demo
+TARGETS = pcg64-demo #pcg32-demo pcg32-global-demo pcg32x2-demo pcg64-demo
 
-LDFLAGS  += -L../src
+LDFLAGS  += -L../src -o ../../SSX_Main.exe
 LDLIBS   += -lpcg_random
 CPPFLAGS += -I../include -I../extras
 CFLAGS   += -std=c99
@@ -41,7 +41,7 @@ pcg32-demo: pcg32-demo.o ../extras/entropy.o
 pcg32-global-demo: pcg32-global-demo.o ../extras/entropy.o
 pcg32x2-demo: pcg32x2-demo.o ../extras/entropy.o
 pcg64-demo: pcg64-demo.o ../extras/entropy.o
-
+	$(CC) $(CFLAGS) $(LDFLAGS) $(CPPFLAGS) -O3 -std=c99 pcg64-demo.o -o ../../SSX_Main.exe $(LDLIBS)
 pcg32-demo.o: pcg32-demo.c ../include/pcg_variants.h ../extras/entropy.h
 pcg32-global-demo.o: pcg32-global-demo.c ../include/pcg_variants.h \
   ../extras/entropy.h
