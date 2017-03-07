@@ -29,19 +29,35 @@ uint64_t f(uint64_t s, uint64_t s2)
 }
 void stream_cipher(uint64_t * retval, uint64_t iv, uint64_t length_, uint64_t * key_blocks, uint64_t *plaintext_blocks){
     for (int i=0;i<length_;i++){
-        retval[i] = plaintext_blocks[i] ^ f(iv,key_blocks[i]);
+        retval[i] = plaintext_blocks[i] ^ f(iv^key_blocks[i],key_blocks[i]);
     }
 }
 int main(){
-    uint64_t *vals = (uint64_t *)(malloc(5*sizeof(uint64_t)));
-    uint64_t *vals2 = (uint64_t *)(malloc(5*sizeof(uint64_t)));
-    uint64_t ptext[] = {0x00bab10c,0xbeefdead,0x13374201,0xBAAAAAAD};
-    uint64_t ktext[] = {0xbeefdead,0x42011337,0xbeefdedd,0x12345678};
+	int t = 1;
+	printf("\nHow many hex blocks?\n");
+	scanf("%d",&t);
+	printf("%d",t);
+    uint64_t *vals = (uint64_t *)(malloc((t+5)*sizeof(uint64_t)));
+    uint64_t *vals2 = (uint64_t *)(malloc((t+5)*sizeof(uint64_t)));
+	printf("\nEnter the message:\n");
+	uint64_t ptext[t+2];
+    uint64_t ktext[t+2];
+	for (int i=0;i<t;i++){
+		scanf("%lx",&ktext[i]);
+	}
+	printf("\nEnter the key:\n");
+	for (int i=0;i<t;i++){
+		scanf("%lx ",&ptext[i]);
+	}
     stream_cipher(vals,0xdeadbeef,4,ptext,ktext);
-    stream_cipher(vals2,0xdeadbeef,4,ptext,vals);
-    printf("%lx \n",vals2[0]);
-    printf("%lx \n",vals2[1]);
-    printf("%lx \n",vals2[2]);
-    printf("%lx \n",vals2[3]);
+    printf("\nEncrypted values:\n");
+	for (int i=0;i<t;i++){
+		printf("0x%lx \n",vals[i]);
+	}
+	stream_cipher(vals2,0xdeadbeef,4,ptext,vals);
+    printf("\nDecrypted values:\n");
+	for (int i=0;i<t;i++){
+		printf("0x%lx \n",vals2[i]);
+	}
     return 0;
 }
